@@ -1,25 +1,35 @@
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import React from 'react';
+import st from './AuthForm.module.css'
 
-const AuthForm: React.FC = () => {
+type AuthFormProps = { Authorization: () => void };
+
+const AuthForm: React.FC<AuthFormProps> = (props) => {
   const onFinish = (values: any) => {
     console.log('Success:', values);
+    props.Authorization()
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
 
+  const [username, setUserName]= useState
+
+
   return (
     <Form
       name="basic"
-      labelCol={{ span:9 }}
+      labelCol={{ span: 9 }}
       wrapperCol={{ span: 6 }}
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
+      className={st.form}
+
     >
+      <div className={st.title}>LOGIN</div>
       <Form.Item
         label="Username"
         name="username"
@@ -35,14 +45,9 @@ const AuthForm: React.FC = () => {
       >
         <Input.Password />
       </Form.Item>
-
-      <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 9, span: 16 }}>
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
-
-      <Form.Item wrapperCol={{ offset: 9, span: 16 }}>
-        <Button type="primary" htmlType="submit">
-          Submit
+      <Form.Item wrapperCol={{ offset: 9, span: 1 }}>
+        <Button type="primary" htmlType="submit" >
+          Login
         </Button>
       </Form.Item>
     </Form>

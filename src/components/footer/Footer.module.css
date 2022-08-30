@@ -1,0 +1,9 @@
+.footer{
+    grid-template-areas: f;
+    border-top: 2px solid #d9d9d9;
+    border-right:2px solid #d9d9d9;
+}
+.button{
+    margin: 15px;
+    color:gray;
+}

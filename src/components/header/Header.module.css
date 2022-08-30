@@ -1,4 +1,27 @@
 .header{
     grid-area: h;
     border-bottom: 2px solid #d9d9d9;
+    display: flex;
+    flex-direction: row;
+}
+.logo{
+    font-size: 35px;
+    color: #d9d9d9;
+    margin: 20px 70px;
+}
+.title{
+    text-transform: uppercase;
+    margin: 30px -50px;
+    font-size: 15px;
+    color: #d9d9d9;
+}
+.user{
+    margin-left: 150px;
+    color: gray;
+    font-size: 15px;
+}
+.users{
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
 }

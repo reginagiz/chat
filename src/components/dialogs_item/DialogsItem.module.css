@@ -1,0 +1,49 @@
+.dialog{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.area_butt{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    height: 100px;
+}
+
+textarea{
+    width: 600px;
+    height: 100px;
+    border: 2px solid #d9d9d9;
+}
+button{
+    margin-left: 15px;
+}
+.messages{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-left: 40px;
+    width: 100%;
+    height: 500px;
+    overflow: scroll;
+}
+.message{
+    background-color: #d9d9d9;
+    color:white;
+    padding: 10px;
+    border-radius: 10px;
+    word-wrap: break-word;
+    max-width: 40%;
+    
+}
+.avatar_mess{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+.avatar{
+    margin-right: 20px;
+}

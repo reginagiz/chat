@@ -8,7 +8,7 @@ const onSearch = (value: string) => console.log(value);
 
 const SearchContact: React.FC = () => (
     <Space direction="vertical" >
-    <Search placeholder="Search..." onSearch={onSearch} className={st.search} />
+        <Search placeholder="Search..." onSearch={onSearch} className={st.search} />
     </Space>
 );
 
