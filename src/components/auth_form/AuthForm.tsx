@@ -1,21 +1,28 @@
 import { Button, Form, Input } from 'antd';
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { UserInfo } from '../../context';
 import st from './AuthForm.module.css'
 
 type AuthFormProps = { Authorization: () => void };
 
 const AuthForm: React.FC<AuthFormProps> = (props) => {
   const onFinish = (values: any) => {
-    console.log('Success:', values);
     props.Authorization()
+    setUserDetails({
+      name: username,
+      password: password,
+      id: Date.now()
+    })
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
 
-  const [username, setUserName]= useState
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
+  const { setUserDetails } = useContext(UserInfo)
 
   return (
     <Form
@@ -27,7 +34,6 @@ const AuthForm: React.FC<AuthFormProps> = (props) => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
       className={st.form}
-
     >
       <div className={st.title}>LOGIN</div>
       <Form.Item
@@ -35,7 +41,7 @@ const AuthForm: React.FC<AuthFormProps> = (props) => {
         name="username"
         rules={[{ required: true, message: 'Please input your username!' }]}
       >
-        <Input />
+        <Input onChange={(e) => { setUserName(e.target.value) }} />
       </Form.Item>
 
       <Form.Item
@@ -43,7 +49,7 @@ const AuthForm: React.FC<AuthFormProps> = (props) => {
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <Input.Password />
+        <Input.Password onChange={(e) => { setPassword(e.target.value) }} />
       </Form.Item>
       <Form.Item wrapperCol={{ offset: 9, span: 1 }}>
         <Button type="primary" htmlType="submit" >

@@ -21,33 +21,36 @@ const data: Array<User> = [
   },
   {
     id: 4,
-    title: 'Danila Leontiev',
+    title: 'Olga Bereziy',
   },
+
 ];
 
+const Navbar: React.FC = () => {
 
-const Navbar: React.FC = () => (
-  <div className={st.navbar}>
-    <SearchContact />
-    <List
-      itemLayout="horizontal"
-      dataSource={data}
-      size='large'
-      className={st.list}
-      renderItem={item => (
-        <NavLink to={`/dialog-item/${item.id}/`}>
-          <List.Item>
-            <List.Item.Meta
-              className={st.item}
-              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-              title={<a href="https://ant.design">{item.title}</a>}
-              description="Hi, how are you? What will you do on the..."
-            />
-          </List.Item>
-        </NavLink>
-      )}
-    />
-  </div>
-);
+  return (
+    <div className={st.navbar}>
+      <List
+        itemLayout="horizontal"
+        dataSource={data}
+        size='large'
+        className={st.list}
+        renderItem={item => (
+          <NavLink to={`/dialog-item/${item.id}/`}>
+            <List.Item>
+              {<List.Item.Meta
+                className={st.item}
+                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                title={item.title}
+                description="Ant Design, a design language for background 
+                applications, is refined by Ant UED Team"
+              />}
+            </List.Item>
+          </NavLink>
+        )}
+      />
+    </div>
+  );
+}
 
 export default Navbar;

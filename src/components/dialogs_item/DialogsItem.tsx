@@ -1,26 +1,43 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import st from './DialogsItem.module.css'
 import { Button } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
+import { UserInfo } from "../../context";
 
-type Message = { id: number, message: string, event: string };
+type Message = { id: number, message: string, event: string, username: string };
+
 const DialogsItem: React.FC = () => {
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [value, setValue] = useState('');
-    const socket = useRef<any>();
 
+    const socket = useRef<any>();
+    const { userDetails } = useContext(UserInfo);
+
+    const message = {
+        username: userDetails.name,
+        message: value,
+        id: Date.now(),
+        event: 'message'
+    }
+
+    const sendMessage = async () => {
+        socket.current.send(JSON.stringify(message));
+        setValue('')
+    }
 
     useEffect(() => {
         socket.current = new WebSocket('ws://localhost:5000');
+        const messagesFromStorage = localStorage.getItem('messages')
+        const a = messagesFromStorage ? JSON.parse(messagesFromStorage) : [];
+        setMessages(a);
 
         socket.current.onopen = () => {
             console.log('Connection established')
         }
         socket.current.onmessage = (event: any) => {
-            const message = JSON.parse(event.data)
-            setMessages(prev => [...prev, message])
+            setMessages(prev => [...prev, JSON.parse(event.data)])
         }
         socket.current.onclose = () => {
             console.log('Socket closed')
@@ -30,15 +47,24 @@ const DialogsItem: React.FC = () => {
         }
     }, [])
 
-    const sendMessage = async () => {
-        const message = {
-            message: value,
-            id: Date.now(),
-            event: 'message'
+    useEffect(() => {
+        const listener = (event: any) => {
+            if (event.code === "Enter" || event.code === "NumpadEnter") {
+                event.preventDefault();
+                sendMessage()
+            }
+        };
+        document.addEventListener("keydown", listener);
+        return () => {
+            document.removeEventListener("keydown", listener);
+        };
+    }, [message])
+
+    useEffect(() => {
+        if (messages.length !== 0) {
+            localStorage.setItem('messages', JSON.stringify(messages))
         }
-        socket.current.send(JSON.stringify(message));
-        setValue('')
-    }
+    }, [messages]);
 
     return (
         <div className={st.dialog}>
@@ -47,8 +73,11 @@ const DialogsItem: React.FC = () => {
                     <div key={mess.id} className={st.avatar_mess}>
                         <Avatar src="https://joeschmoe.io/api/v1/random"
                             className={st.avatar} size={60} />
-                        <div className={st.message} key={mess.id}>
-                            {mess.message}
+                        <div className={st.container}>
+                            <div className={st.name_mess} key={mess.id}>
+                                <div key={userDetails.id} className={st.name}>{mess.username}</div>
+                                <div className={st.message}>{mess.message}</div>
+                            </div>
                         </div>
                     </div>
                 )}

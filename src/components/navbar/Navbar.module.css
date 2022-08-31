@@ -5,15 +5,13 @@
 .list{
     height: 500px;
     margin-top: 70px;
+    overflow: scroll;
 }
 .item:hover{
     background-color: #d9d9d9;
-    width: 150px;
 }
-.item:active{
-    background-color: #d9d9d9;
-    width: 150px;
-}
+
 .item{
     margin-bottom: 10px;
+    overflow: hidden;
 }
